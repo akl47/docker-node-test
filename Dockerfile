@@ -1,11 +1,10 @@
 FROM node:10-alpine
 # Install dependencies
-WORKDIR /src/
-
+WORKDIR /src/ 
 RUN npm install
 
 # Expose the app port
-EXPOSE 8000
+EXPOSE 3000
 
 # Start the app
-CMD npm start
+CMD ["npm","start"]
