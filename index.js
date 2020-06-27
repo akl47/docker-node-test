@@ -1,13 +1,12 @@
-const express = require('express');
-let app = express();
+'use strict'
 
+const express = require('express')
 
+const { PORT = '3000' } = process.env
+const app = express()
 
-app.get('*',(req,res,next)=>{
-    console.log(req.originalUrl)
-    res.send('Hello World');
+app.use((req, res, next) => {
+  res.send('Hello Alex')
 })
 
-app.listen(3000,()=>{
-    console.log('Server Running')
-})
+app.listen(PORT)
