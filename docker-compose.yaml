@@ -5,15 +5,18 @@ services:
     build:
       context: .
     environment: 
+      DB_NAME: postgres
       DB_SCHEMA: postgres
-      DB_USER: postgres
+      DB_USERNAME: postgres
       DB_PASSWORD: postgres
       DB_HOST: postgres
+      ENV: development
+      PORT: 3000
     volumes:
       - ./app:/usr/src/app
       - /usr/src/app/node_modules # Remove this if you have pure JS dependencies
     ports:
-      - "3000:3000"
+      - 3000:3000
     depends_on: 
       - postgres
   postgres:
@@ -21,6 +24,8 @@ services:
     environment: 
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    #volumes:
+    #  - ./host-folder/:/var/lib/postgresql/data/
     ports:
       - '5432:5432'
     

@@ -1,46 +1,35 @@
 'use strict'
 
 const express = require('express')
-
 const { PORT = '3000' } = process.env
+const env = process.env.NODE_ENV || 'development';
 const app = express()
+const db = require('./models')
 
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize(process.env.DB_SCHEMA || 'postgres',
-                                process.env.DB_USER || 'postgres',
-                                process.env.DB_PASSWORD || '',
-                                {
-                                    host: process.env.DB_HOST || 'localhost',
-                                    port: process.env.DB_PORT || 5432,
-                                    dialect: 'postgres',
-                                    dialectOptions: {
-                                        ssl: process.env.DB_SSL == "true"
-                                    }
-                                });
-const Person = sequelize.define('Person', {
-    firstName: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    lastName: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
-});
-
-
-app.use((req, res, next) => {
-  Person.findAll()
-  .then( persons => {
-      res.status(200).send(JSON.stringify(persons));
+app.get("/",(req, res, next) => {
+  db.User.findAll().then((val)=>{
+    res.json(val)
   })
-  .catch( err => {
-      res.status(500).send(JSON.stringify(err));
-  });
 })
 
-app.listen(PORT,()=>{
-  sequelize.sync().then(()=>{
-    console.log("Here")
+app.get("/add",(req, res, next) => {
+  db.User.create({
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'example@example.com',
+  }).then((user)=>{
+    res.json(user)
   })
+})
+
+
+app.listen(PORT,()=>{
+    db.sequelize.sync().then(()=>{
+      //If in DEV then seed
+     //if(env==='development') require()
+      
+    }).catch((err)=>{
+      console.log('ERR:');
+      console.log(err)
+    })
 })

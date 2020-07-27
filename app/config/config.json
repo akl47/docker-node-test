@@ -1,0 +1,19 @@
+{
+  "development": {
+    "use_env_variable":true,
+    "host":"postgres",
+    "dialect":"postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "postgres",
+    "host": "postgres",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "postgres",
+    "host": "postgres",
+    "dialect": "postgres"
+  }
+}
