@@ -26,7 +26,7 @@ app.get("/add",(req, res, next) => {
 app.listen(PORT,()=>{
     db.sequelize.sync().then(()=>{
       //If in DEV then seed
-     //if(env==='development') require()
+     if(env==='development') require('./seeds')
       
     }).catch((err)=>{
       console.log('ERR:');
